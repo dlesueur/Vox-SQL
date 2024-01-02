@@ -14,4 +14,3 @@ gspread
 oauth2client
 df2gspread
 xlsxwriter
-io
