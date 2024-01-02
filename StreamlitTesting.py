@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import pymysql
 from sshtunnel import SSHTunnelForwarder
+from pydub import AudioSegment
+from pydub.playback import play
 
 
 
@@ -56,6 +58,9 @@ def app():
         st.download_button('Download Report', data = convert_df(df), file_name = 'export.csv')
         st.write('Num rows: ', len(df))
         st.dataframe(df)
+        sound = AudioSegment.from_file("ding-idea-40142.mp3", format="mp3")
+        play(sound)
+
 
 
 if __name__ == "__main__":
