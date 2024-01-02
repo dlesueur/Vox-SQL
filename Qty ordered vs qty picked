@@ -1,0 +1,71 @@
+-- qty ordered in last x time period
+select concat(c.companyName, p.itemSkuNumber), c.companyName, p.itemSkuNumber, sum(p.itemQty)-sum(p.remainingQtyToBeBoxed) as 'Qty Ordered'
+from purchased_products p
+join customers c on c.id = p.customerId
+where p.deleted_at is NULL
+and p.updated_at >= '2023-09-01 00:00:00'
+and p.customerId =
+group by concat(c.companyName, p.itemSkuNumber)
+
+
+-- qty picked in last x time period
+select concat(c.companyName, i.itemSkuNumber), c.companyName, i.itemSkuNumber, sum(i.updateQty) as 'Qty Picked'
+from inventory_logs i
+join customers c on c.id = i.customerId
+where i.eventType = '15' and i.comment LIKE '%Order #%' and i.updated_at >= '2023-09-01 00:00:00'
+and i.customerId =
+group by concat(c.companyName, i.itemSkuNumber)
+
+select concat(c.companyName, i.itemSkuNumber), c.companyName, i.itemSkuNumber, i.updateQty
+from inventory_logs i
+join customers c on c.id = i.customerId
+where i.eventType = '15' and i.updated_at >= '2023-09-01 00:00:00'
+
+
+
+--all?
+select concat(c.companyName, p.itemSkuNumber), c.companyName, p.itemSkuNumber, sum(p.itemQty) as 'Qty Ordered', sum(i.updateQty) as 'Qty Picked'
+from purchased_products p
+join customers c on c.id = p.customerId
+join inventory_logs i on i.customerId = p.customerId and i.itemSkuNumber = p.itemSkuNumber
+where p.deleted_at is NULL and i.eventType = '15' and i.comment LIKE '%Order #%'
+and p.updated_at >= '2023-09-01 00:00:00'
+and p.itemSkuNumber = '90589130'
+group by concat(c.companyName, p.itemSkuNumber)
+
+select c.companyName, p.itemSkuNumber, 
+    sum(case when p.deleted_at is NULL and p.updated_at >= '2023-09-01 00:00:00' then p.itemQty else 0 end) as 'Qty Ordered',
+    sum(case when p.deleted_at is NULL and i.eventType = '15' and i.comment LIKE '%Order #%' and i.updated_at >= '2023-09-01 00:00:00' then i.updateQty else 0 end) as 'Qty Picked'
+from purchased_products p
+join customers c on c.id = p.customerId
+join inventory_logs i on i.customerId = p.customerId and i.itemSkuNumber = p.itemSkuNumber
+group by concat(c.companyName, p.itemSkuNumber)
+
+
+
+
+
+-- orders that have been on IOE
+
+select orderId, orderNumber, customerId
+from orders_logs
+where orderStatus = '17' and updated_at >= '2023-09-01 00:00:00'
+
+-- products from orders that have been on IOE
+
+select distinct concat(c.companyName, p.itemSkuNumber) as CustSKU, c.companyName, p.itemSkuNumber, 
+from purchased_products p
+join customers c on c.id = p.customerId
+where p.orderId in 
+and p.deleted_at is NULL
+
+
+
+
+
+select concat(c.companyName, i.itemSkuNumber), c.companyName, i.itemSkuNumber, sum(i.updateQty) as 'QTY Picked'
+from inventory_logs i
+join customers c on c.id = i.customerId
+where i.eventType in ('15', '7') and (i.comment LIKE '%Order #%' or i.comment LIKE '%QB #%') and i.updated_at >= '2023-08-01 00:00:00'
+and i.itemSkuNumber in 
+group by concat(c.companyName, i.itemSkuNumber)

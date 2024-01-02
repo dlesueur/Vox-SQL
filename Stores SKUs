@@ -1,0 +1,15 @@
+select concat(c.companyName, ci.itemSkuNumber), c.companyName as 'Customer', ci.itemSkuNumber as 'SKU #', ci.created_at as 'SKU Created Date', ci.name as 'Description', ci.avgSale as 'Avg Monthly Sale', sum(i.itemQty) as 'QoH', ci.rank as 'Rank'
+from catalog_items ci
+join customers c on c.id = ci.customerId
+join inventories_table i on i.customerId = ci.customerId and i.itemSkuNumber = ci.itemSkuNumber
+where c.id in ('123','455','456','470','472','400','375','406','5','593','153','576','342','465','366','250','242','6','135','255','112','300','299','306','260','295','71','520','398','518','525','296','590','309','56','405','60', '265', '90')
+and ci.isRawMaterial = '0'
+group by concat(c.companyName, ci.itemSkuNumber)
+
+
+select itemSkuNumber, itemQty, created_at, updated_at, subLoadNumber
+from inventories_table
+where customerId = '123', and itemSkuNumber in ('4000124','4000115','8000928','4000116','7001565','4000125','8000693','7000390')
+
+git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"

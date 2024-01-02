@@ -1,0 +1,10 @@
+select c.companyName, l.loadNumber, l.location, sum(i.itemQty)
+from inventories_table i
+join location_tables l on l.id = i.locationTableId
+join customers c on i.customerId = c.id
+where l.type in ('1', '4')
+  and l.invType ='1' 
+  and l.location not like '%CHECK%'
+  and l.location not like '%PUT%'
+  and l.location not like '%VOXWHSTG%'
+group by i.customerId, l.loadNumber

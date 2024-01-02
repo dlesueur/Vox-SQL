@@ -1,0 +1,7 @@
+select orderNumber, shipMethod, orderDate, created_at, updated_at, shippingCompany
+from orders
+where orderStatus = '6'
+and customerId = '508'
+and isBulk = '0'
+
+

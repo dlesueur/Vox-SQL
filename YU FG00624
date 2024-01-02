@@ -1,0 +1,3 @@
+select p.orderId, p.itemQty, p.remainingQtyToBeBoxed, p.created_at, p.updated_at
+from purchased_products p
+where p.deleted_at IS NULL and p.itemSkuNumber = 'FG00624' and p.updated_at > '2023-10-03 00:00:00'

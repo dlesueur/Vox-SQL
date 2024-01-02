@@ -1,0 +1,44 @@
+-- all vivint products + QoH
+select concat(c.companyName, ci.itemSkuNumber), c.companyName as 'Customer', c.status as 'Customer Status', ci.itemSkuNumber as 'SKU', ci.name as 'Description', ci.status as 'Item Status', sum(i.itemQty) as 'QoH', ci.created_at as 'SKU Created'
+from catalog_items ci join customers c on ci.customerId = c.id
+join inventories_table i on i.customerId = c.id and i.itemSkuNumber = ci.itemSkuNumber
+where c.companyName like "%viv%"
+group by concat(c.companyName, ci.itemSkuNumber)
+
+-- get all who have updated (at less than whatever date with lower commented out code)
+select concat(c.companyName, ci.itemSkuNumber), max(p.updated_at) from catalog_items ci 
+join customers c on c.id = ci.customerId join purchased_products p on ci.itemSkuNumber = p.itemSkuNumber
+where concat(c.companyName, ci.itemSkuNumber) in /* here I copied all of the concatenated customer and SKUs from the first query */
+group by concat(c.companyName, ci.itemSkuNumber)
+-- having max(p.updated_at) < '2022-10-15 00:00:00'
+
+
+
+
+
+
+-- single customer
+select c.companyName as 'Customer', ci.itemSkuNumber as 'SKU', ci.name as 'Description', ci.status as 'Item Status', sum(i.itemQty) as 'QoH', ci.created_at as 'SKU Created Date'
+from catalog_items ci join customers c on ci.customerId = c.id
+join inventories_table i on i.customerId = c.id and i.itemSkuNumber = ci.itemSkuNumber
+where c.id = '123'
+group by i.itemSkuNumber
+
+select p.itemSkuNumber, max(p.updated_at) from catalog_items ci 
+join customers c on c.id = ci.customerId join purchased_products p on ci.itemSkuNumber = p.itemSkuNumber
+where c.id = '123'
+group by ci.itemSkuNumber
+
+
+
+-- all stores+ customers
+select concat(c.companyName, ci.itemSkuNumber) as 'helper', c.companyName as 'Customer', ci.itemSkuNumber as 'SKU', ci.name as 'Description', ci.status as 'Item Status', sum(i.itemQty) as 'QoH', ci.created_at as 'SKU Created Date'
+from catalog_items ci join customers c on ci.customerId = c.id
+join inventories_table i on i.customerId = c.id and i.itemSkuNumber = ci.itemSkuNumber
+where c.id in ('123','455','456','470','472','400','375','406','5','593','153','576','342','465','366','250','242','6','135','255','112','300','299','306','260','295','71','520','398','518','525','296','590','309','56','405','60', '265', '90')
+group by concat(c.companyName, ci.itemSkuNumber)
+
+select concat(c.companyName, ci.itemSkuNumber) as 'helper', max(p.updated_at) from catalog_items ci 
+join customers c on c.id = ci.customerId join purchased_products p on ci.itemSkuNumber = p.itemSkuNumber
+where c.id in ('123','455','456','470','472','400','375','406','5','593','153','576','342','465','366','250','242','6','135','255','112','300','299','306','260','295','71','520','398','518','525','296','590','309','56','405','60', '265', '90')
+group by concat(c.companyName, ci.itemSkuNumber)

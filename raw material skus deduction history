@@ -1,0 +1,6 @@
+
+select il.itemSkuNumber, sum(il.updateQty)
+from inventory_logs il
+where il.itemSkuNumber in 
+and il.eventType = '3'
+group by il.itemSkuNumber

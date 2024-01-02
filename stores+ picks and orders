@@ -1,0 +1,29 @@
+--- How many orders and picks do we really do for stores?
+
+select o.customerName, 
+sum(case when o.updated_at between '2022-12-01 00:00:00' and '2022-12-31 23:59:59' then 1 else 0 end) as 'December 22 Orders',
+sum(case when o.updated_at between '2023-01-01 00:00:00' and '2023-01-31 23:59:59' then 1 else 0 end) as 'January Orders',
+sum(case when o.updated_at between '2023-02-01 00:00:00' and '2023-02-28 23:59:59' then 1 else 0 end) as 'February Orders',
+sum(case when o.updated_at between '2023-03-01 00:00:00' and '2023-03-31 23:59:59' then 1 else 0 end) as 'March Orders',
+sum(case when o.updated_at between '2023-04-01 00:00:00' and '2023-04-30 23:59:59' then 1 else 0 end) as 'April Orders',
+sum(case when o.updated_at between '2023-05-01 00:00:00' and '2023-05-31 23:59:59' then 1 else 0 end) as 'May Orders',
+sum(case when o.updated_at between '2023-06-01 00:00:00' and '2023-06-30 23:59:59' then 1 else 0 end) as 'June Orders',
+sum(case when o.updated_at between '2023-07-01 00:00:00' and '2023-07-31 23:59:59' then 1 else 0 end) as 'July Orders',
+sum(case when o.updated_at between '2023-08-01 00:00:00' and '2023-08-31 23:59:59' then 1 else 0 end) as 'August Orders',
+sum(case when o.updated_at between '2023-09-01 00:00:00' and '2023-09-30 23:59:59' then 1 else 0 end) as 'September Orders',
+sum(case when o.updated_at between '2023-10-01 00:00:00' and '2023-10-31 23:59:59' then 1 else 0 end) as 'October Orders',
+sum(case when o.updated_at between '2023-11-01 00:00:00' and '2023-11-30 23:59:59' then 1 else 0 end) as 'November Orders',
+from orders o
+where o.orderStatus = '6' 
+and o.isBulk = '0'
+and o.customerId in ('123','455','456','470','472','400','375','406','5','593','153','576','342','465','366','250','242','6','135','255','112','300','299','306','260','295','71','520','398','518','525','296','590','309','56','405','60', '265', '90')
+group by o.customerName
+
+
+
+select c.customerName, 
+sum(case when )
+from purchased_products p
+join customers c on c.id = p.customerId
+
+

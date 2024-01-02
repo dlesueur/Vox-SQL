@@ -1,0 +1,31 @@
+select customerId, count(id)
+from orders
+where orderStatus = '6' and updated_at between '2023-10-01 00:00:00' and '2023-10-31 23:59:59'
+group by customerId
+
+
+select sum(CASE WHEN updated_at between '2021-04-01 00:00:00' and '2021-04-30 23:59:59' THEN 1 ELSE 0 END) as 'April 21',
+       sum(CASE WHEN updated_at between '2021-05-01 00:00:00' and '2021-05-31 23:59:59' THEN 1 ELSE 0 END) as 'May 21',
+       sum(CASE WHEN updated_at between '2021-06-01 00:00:00' and '2021-06-31 23:59:59' THEN 1 ELSE 0 END) as 'June 21',
+       sum(CASE WHEN updated_at between '2021-07-01 00:00:00' and '2021-07-31 23:59:59' THEN 1 ELSE 0 END) as 'July 21',
+       sum(CASE WHEN updated_at between '2021-08-01 00:00:00' and '2021-08-31 23:59:59' THEN 1 ELSE 0 END) as 'August 21',
+    sum(CASE WHEN updated_at between '2021-09-01 00:00:00' and '2021-09-30 23:59:59' THEN 1 ELSE 0 END) as 'September 21',
+    sum(CASE WHEN updated_at between '2021-10-01 00:00:00' and '2021-10-31 23:59:59' THEN 1 ELSE 0 END) as 'October 21',
+    sum(CASE WHEN updated_at between '2021-11-01 00:00:00' and '2021-11-30 23:59:59' THEN 1 ELSE 0 END) as 'November 21',
+    sum(CASE WHEN updated_at between '2021-12-01 00:00:00' and '2021-12-31 23:59:59' THEN 1 ELSE 0 END) as 'December 21',
+    sum(CASE WHEN updated_at between '2022-01-01 00:00:00' and '2022-01-31 23:59:59' THEN 1 ELSE 0 END) as 'January 22',
+    sum(CASE WHEN updated_at between '2022-02-01 00:00:00' and '2022-02-28 23:59:59' THEN 1 ELSE 0 END) as 'February 22',
+    sum(CASE WHEN updated_at between '2022-03-01 00:00:00' and '2022-03-31 23:59:59' THEN 1 ELSE 0 END) as 'March 22',
+    sum(CASE WHEN updated_at between '2022-04-01 00:00:00' and '2022-04-30 23:59:59' THEN 1 ELSE 0 END) as 'April 22',
+    sum(CASE WHEN updated_at between '2022-05-01 00:00:00' and '2022-05-31 23:59:59' THEN 1 ELSE 0 END) as 'May 22',
+    sum(CASE WHEN updated_at between '2022-06-01 00:00:00' and '2022-06-30 23:59:59' THEN 1 ELSE 0 END) as 'June 22',
+    sum(CASE WHEN updated_at between '2022-07-01 00:00:00' and '2022-07-31 23:59:59' THEN 1 ELSE 0 END) as 'July 22',
+    sum(CASE WHEN updated_at between '2022-08-01 00:00:00' and '2022-08-31 23:59:59' THEN 1 ELSE 0 END) as 'August 22',
+    sum(CASE WHEN updated_at between '2022-09-01 00:00:00' and '2022-09-30 23:59:59' THEN 1 ELSE 0 END) as 'September 22',
+    sum(CASE WHEN updated_at between '2022-10-01 00:00:00' and '2022-10-31 23:59:59' THEN 1 ELSE 0 END) as 'October 22',
+    sum(CASE WHEN updated_at between '2023-08-01 00:00:00' and '2023-08-31 23:59:59' THEN 1 ELSE 0 END) as 'August 23',
+    sum(CASE WHEN updated_at between '2023-09-01 00:00:00' and '2023-09-30 23:59:59' THEN 1 ELSE 0 END) as 'September 23',
+    sum(CASE WHEN updated_at between '2023-10-01 00:00:00' and '2023-10-31 23:59:59' THEN 1 ELSE 0 END) as 'October 23'
+from orders
+where orderStatus = '6'
+group by customerId

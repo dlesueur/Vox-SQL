@@ -1,0 +1,6 @@
+select i.customerId, i.itemSkuNumber,  l.location, l.loadNumber, sum(i.itemQty), concat(i.itemSkuNumber, l.loadNumber)
+from location_tables l
+join inventories_table i on i.locationTableId = l.id
+where i.customerId = '296'
+and i.itemSkuNumber in ('90531547','90470453','90470480','90470477','90470478','90470479','90487535','90508442','90508447','90508450','90508458','90508465','90508448','90530701','90531546')
+group by concat(i.itemSkuNumber, l.loadNumber)

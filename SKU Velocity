@@ -1,0 +1,35 @@
+-- What item moves the most?
+
+select concat(c.companyName, p.itemSkuNumber), c.companyName, p.itemSkuNumber, ci.name, sum(p.itemQty)
+from purchased_products p
+join customers c on c.id = p.customerId
+join catalog_items ci on ci.customerId = p.customerId and ci.itemSkuNumber = p.itemSkuNumber
+where p.updated_at between '2023-09-01 00:00:00' and '2023-09-30 23:59:59'
+and p.deleted_at is NULL
+and p.customerId in ('123','455','456','470','472','400','375','406','5','593','153','576','342','465','366','250','242','6','135','255','112','300','299','306','260','295','71','520','398','518','525','296','590','309','56','405','60')
+group by concat(c.companyName, p.itemSkuNumber)
+order by sum(p.itemQty) desc
+
+
+--- how can you see for multiple months
+
+select concat(c.companyName, p.itemSkuNumber), c.companyName, p.itemSkuNumber, ci.name, 
+SUM(CASE WHEN YEAR(updated_at) = 2022 and MONTH(updated_at) = 10 THEN p.itemQty ELSE 0 END) as 'Oct 2022',
+SUM(CASE WHEN YEAR(updated_at) = 2022 AND MONTH(updated_at) = 11 THEN p.itemQty ELSE 0 END) as 'Nov 2022',
+SUM(CASE WHEN YEAR(updated_at) = 2022 AND MONTH(updated_at) = 12 THEN p.itemQty ELSE 0 END) as 'Dec 2022',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 1 THEN p.itemQty ELSE 0 END) as 'Jan',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 2 THEN p.itemQty ELSE 0 END) as 'Feb',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 3 THEN p.itemQty ELSE 0 END) as 'Mar',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 4 THEN p.itemQty ELSE 0 END) as 'Apr',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 5 THEN p.itemQty ELSE 0 END) as 'May',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 6 THEN p.itemQty ELSE 0 END) as 'Jun',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 7 THEN p.itemQty ELSE 0 END) as 'Jul',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 8 THEN p.itemQty ELSE 0 END) as 'Aug',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 9 THEN p.itemQty ELSE 0 END) as 'Sep'
+from purchased_products p
+join customers c on c.id = p.customerId
+join catalog_items ci on ci.customerId = p.customerId and ci.itemSkuNumber = p.itemSkuNumber
+where p.updated_at between '2023-09-01 00:00:00' and '2023-09-30 23:59:59'
+and p.deleted_at is NULL
+and p.customerId in ('123','455','456','470','472','400','375','406','5','593','153','576','342','465','366','250','242','6','135','255','112','300','299','306','260','295','71','520','398','518','525','296','590','309','56','405','60')
+group by concat(c.companyName, p.itemSkuNumber)

@@ -1,0 +1,26 @@
+
+SELECT cs.companyName AS 'Customer', l.warehouseName, l.location, l.loadNumber, l.type
+FROM inventories_table i
+LEFT JOIN location_tables l ON i.locationTableId = l.id
+LEFT JOIN catalog_items c ON i.catalogItemId = c.id
+JOIN customers cs ON c.customerId = cs.id
+WHERE i.customerId NOT IN ('1')
+  AND l.type NOT IN ('0', '5', '6', '7')
+  AND c.customerId NOT IN ('1', '50')
+  AND i.itemQty > 0
+  AND l.location NOT IN (
+    'FAKE_KIT_INVENTORY', 'SUNRUN-FAKE-STAGE', 'CHECK01', 'CHECK-01-A-01',
+    'DTHOLD', 'DTHOLD2', 'IM-W3-STAGE-004', 'imdanshStaging1', 'MASK2', 'MOVE-01-a-01',
+    'PODCHECK', 'PUTAWAY01', 'TEMP', 'RECEIVING-1-A', 'TEMP', 'RECEIVING-10-A',
+    'TEMP', 'RECEIVING-10-A-01', 'TRUCK-02-A-14', 'TRUCK-22-A-06', 'TRUCK-28-A-06',
+    'TRUCK-28-A-14', 'TRUCK-35-A-20', 'TRANSFER04'
+  )
+  AND l.location NOT LIKE '%RPLPN%'
+  AND l.location NOT LIKE '%CHECK%'
+  AND l.location not like '%BULKSHIP%'
+  and l.location not like '%QB%'
+  AND l.location not like '%LAIRDBULK%'
+  and l.location not like '%PROD%'
+  and l.location not like '%PUT%'
+AND l.status = 1
+group by l.loadNumber

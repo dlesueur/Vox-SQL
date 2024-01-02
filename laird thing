@@ -1,0 +1,11 @@
+select ci.itemSkuNumber, 
+    ci.name, 
+    SUM(case when i.customerId = '508' THEN i.itemQty ELSE 0 END) AS 'QoH', 
+    SUM(case when i.customerId = '508' and i.invType = '1' THEN i.itemQty ELSE 0 END) as 'Quantity on Hold', 
+    l.lotNumber, 
+    l.lotExpDate
+from catalog_items ci
+join inventories_table i on ci.itemSkuNumber = i.itemSkuNumber and ci.customerId = i.customerId
+join lot_numbers l on l.id = i.lotNumberId and l.customerId = i.customerId
+where ci.customerId = '508'
+group by ci.itemSkuNumber, l.lotNumber

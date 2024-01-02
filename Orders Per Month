@@ -1,0 +1,18 @@
+SELECT customerName,
+SUM(CASE WHEN YEAR(updated_at) = 2022 and MONTH(updated_at) = 10 THEN 1 ELSE 0 END) as 'Oct 2022',
+SUM(CASE WHEN YEAR(updated_at) = 2022 AND MONTH(updated_at) = 11 THEN 1 ELSE 0 END) as 'Nov 2022',
+SUM(CASE WHEN YEAR(updated_at) = 2022 AND MONTH(updated_at) = 12 THEN 1 ELSE 0 END) as 'Dec 2022',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 1 THEN 1 ELSE 0 END) as 'Jan',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 2 THEN 1 ELSE 0 END) as 'Feb',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 3 THEN 1 ELSE 0 END) as 'Mar',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 4 THEN 1 ELSE 0 END) as 'Apr',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 5 THEN 1 ELSE 0 END) as 'May',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 6 THEN 1 ELSE 0 END) as 'Jun',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 7 THEN 1 ELSE 0 END) as 'Jul',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 8 THEN 1 ELSE 0 END) as 'Aug',
+   SUM(CASE WHEN YEAR(updated_at)=2023 AND MONTH(updated_at) = 9 THEN 1 ELSE 0 END) as 'Sep'
+FROM orders
+WHERE customerId in ('123','455','456','470','472','400','375','406','5','593','153','576','342','465','366','250','242','6','135','255','112','300','299','306','260','295','71','520','398','518','525','296','590','309','56','405','60')
+AND orderStatus = '6'
+group by customerId
+order by customerName

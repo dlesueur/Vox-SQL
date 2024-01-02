@@ -1,0 +1,20 @@
+
+
+select p.customerId, c.companyName, p.itemSkuNumber, ci.name, sum(i.itemQty) as QoH, p.updated_at, max(p.orderId)
+from purchased_products_locations p
+join customers c on c.id = p.customerId
+join catalog_items ci on ci.itemSkuNumber = p.itemSkuNumber and ci.customerId = p.customerId 
+join inventories_table i on i.itemSkuNumber = p.itemSkuNumber and i.customerId = p.customerId
+where p.customerId in ('304','307','305','352','333','398','518','525','258','364','316','296','295','260','590','383','312','506','299','315','300','347','259','301','302','314','71','520','308','309','311','313','582','44','306','351','303','241','317')
+group by p.customerId, p.itemSkuNumber 
+
+select p.customerId, p.itemSkuNumber, max(p.orderId)
+from purchased_products_locations purchased_products
+where p.customerId in ('304','307','305','352','333','398','518','525','258','364','316','296','295','260','590','383','312','506','299','315','300','347','259','301','302','314','71','520','308','309','311','313','582','44','306','351','303','241','317')
+having p.updated_at < '2022-10-13 00:00:00'
+
+
+select i.customerId, sum(i.itemQty) as QoH
+from inventories_table i
+where p.customerId in ('304','307','305','352','333','398','518','525','258','364','316','296','295','260','590','383','312','506','299','315','300','347','259','301','302','314','71','520','308','309','311','313','582','44','306','351','303','241','317')
+group by i.customerId, i.itemSkuNumber
