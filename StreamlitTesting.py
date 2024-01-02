@@ -8,7 +8,6 @@ from sshtunnel import SSHTunnelForwarder
 
 
 def app():
-    st.sidebar.image('VF Logo.jpeg')
     # CSS to inject contained in a string
     hide_table_row_index = """
             <style>
