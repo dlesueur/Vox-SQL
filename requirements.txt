@@ -1,0 +1,17 @@
+streamlit
+pandas
+pymysql
+paramiko
+sshtunnel
+plotly
+matplotlib
+datetime
+pgeocode
+#dateutil
+numpy
+altair
+gspread
+oauth2client
+df2gspread
+xlsxwriter
+io
